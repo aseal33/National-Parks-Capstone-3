@@ -18,5 +18,8 @@ namespace Capstone.Classes
             this.Price = price;
             this.Type = type;
         }
+
+
+        //Delete this
     }
 }
