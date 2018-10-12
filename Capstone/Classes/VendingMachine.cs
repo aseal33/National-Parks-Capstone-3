@@ -36,63 +36,56 @@ namespace Capstone.Classes
         {
             foreach (KeyValuePair<string, Product> kvp in inventory)
             {
-                if(kvp.Value.Quantity > 0)
+                if (kvp.Value.Quantity > 0)
                 {
-                   Console.WriteLine($"{kvp.Value.Location} | {kvp.Value.Name} | {kvp.Value.Price} | {kvp.Value.Quantity} in stock"); 
+                    Console.WriteLine($"> {kvp.Value.Location} | {kvp.Value.Name} | ${kvp.Value.Price} | {kvp.Value.Quantity} in stock");
                 }
                 else
                 {
-                    Console.Write($"{kvp.Value.Location} | {kvp.Value.Name} | {kvp.Value.Price} SOLD OUT");
-                    
+                    Console.WriteLine($"> {kvp.Value.Location} | {kvp.Value.Name} | ${kvp.Value.Price} | SOLD OUT"); 
                 }
-                
             }
         }
 
         public void DispenseProduct(string input)
-        {         
+        {            
             if (inventory.ContainsKey(input))
             {
                 Product product = inventory[input];
 
                 if (product.Quantity > 0)
                 {
-                    product.Quantity-= 1;
+                    product.Quantity--;
 
                     switch (product.Type)
                     {
                         case "Chip":
-                            Console.WriteLine("Crunch Crunch, Yum! \n");
+                            Console.WriteLine("\n>>CRUNCH CRUNCH, YUM!<<");
                             break;
 
                         case "Candy":
-                            Console.WriteLine("Munch Munch, Yum! \n");
+                            Console.WriteLine("\n>>MUNCH MUNCH, YUM!<<");
                             break;
 
                         case "Drink":
-                            Console.WriteLine("Glug Glug, Yum! \n");
+                            Console.WriteLine("\n>>GLUG GLUG, YUM!<<");
                             break;
 
                         case "Gum":
-                            Console.WriteLine("Chew Chew, Yum! \n");
+                            Console.WriteLine("\n>>CHEW CHEW, YUM!<<");
                             break;
-                    }
-
-                    using (StreamWriter sw = new StreamWriter("log.txt", true))
-                    {
-                        sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt")} {product.Name} {product.Location}");
-                    };
+                    }                    
                 }
 
                 else
                 {
-                    Console.WriteLine("Sorry! That item is out of stock.");
+                    Console.WriteLine("> Sorry! That item is out of stock.");
                 }
             }
 
             else
             {
-                Console.WriteLine("Invalid Entry");
+                Console.WriteLine("> Invalid Entry");
             }
         }
     }

@@ -19,10 +19,9 @@ namespace Capstone
                 Console.WriteLine("Welcome to the VendoMatic 4000: Select Option Below");
                 
 
-                Console.Write("(1) View Inventory \n(2) Select Product \n(3) Quit\n");
-                Console.Write($"> Current Balance: ${balance} \n>>:");
-                string menu = Console.ReadLine();
-                Console.WriteLine("");
+                Console.Write("(1) View Inventory \n(2) Select Product \n(3) Quit\n >>:");
+                Console.WriteLine($"Current Balance: ${balance}");
+                string menu = Console.ReadLine();                
 
                 if (menu == "1")
                 {
@@ -36,7 +35,7 @@ namespace Capstone
                     do
                     {
                         Console.Write("> Please enter the location of the product you'd like to puchase: ");
-                        string input = Console.ReadLine().ToUpper();
+                        string input = Console.ReadLine();
 
 
                         if (vendingMachine.inventory.ContainsKey(input))
@@ -45,14 +44,14 @@ namespace Capstone
 
                             if (product.Quantity > 0)
                             {
-                                Console.Write($"> Price of item selected : ${product.Price} \n\n > {product.Quantity} Remaining\n");
+                                Console.Write($"Price of item selected : ${product.Price} \n {product.Quantity} Remaining");
 
 
                                 bool run = true;
 
                                 while (run)
                                 {
-                                    Console.WriteLine($"\n> Current Balance is ${balance}\n\n> Please Enter a Whole Dollar Amount(1, 2, 5, 10) or (E)nd to dispense");
+                                    Console.WriteLine($"\n >Current Balance is ${balance}\n> Please Enter a Whole Dollar Amount(1, 2, 5, 10) or (E)nd to dispense");
                                     string input2 = Console.ReadLine();
 
 
@@ -61,10 +60,10 @@ namespace Capstone
                                         int amount = int.Parse(input2);
                                         balance += (decimal)amount;
 
-                                        Console.WriteLine($"> ${input2} inserted.");
+                                        Console.WriteLine($"${input2} inserted.");
                                         using (StreamWriter sw = new StreamWriter("log.txt", true))
                                         {
-                                            sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} FEED MONEY: ${amount}     ${balance}");
+                                            sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt")} FEED MONEY: ${amount}     ${balance}");
                                         }
 
                                     }
@@ -76,32 +75,28 @@ namespace Capstone
                                             vendingMachine.DispenseProduct(input);
                                             using (StreamWriter sw = new StreamWriter("log.txt", true))
                                             {
-                                                sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} {product.Name} {product.Location} ${balance}     ${balance - product.Price}");
+                                                sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt")} {product.Name} {product.Location} ${balance}     ${balance - product.Price}");
 
                                             };
                                             balance -= product.Price;
                                         }
                                         else
                                         {
-                                            Console.WriteLine("> Insufficient Funds, please add more money.");
+                                            Console.WriteLine("Insufficient Funds, please add more money.");
                                         }
 
                                     }
                                     else
                                     {
-                                        Console.WriteLine("> Invalid Entry. Please enter valid input.");
+                                        Console.WriteLine("Invalid Entry. Please enter valid input.");
                                     }
                                 }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Sorry that item is SOLD OUT");
                             }
                         }
 
                         else
                         {
-                            Console.WriteLine("> Invalid Entry. Please enter valid input.");
+                            Console.WriteLine("Invalid Entry. Please enter valid input.");
                             valid = true;
                         }
 
@@ -110,12 +105,12 @@ namespace Capstone
 
                 else if (menu == "3")
                 {
-                    Console.WriteLine("> Thank You for using VendoMatic 4000!");
-                    Console.WriteLine($"> Your remaining balance is: ${balance}");
+                    Console.WriteLine("Thank You for using VendoMatic 4000!");
+                    Console.WriteLine($"Your remaining balance is: ${balance}");
 
                     using (StreamWriter sw = new StreamWriter("log.txt", true))
                     {
-                        sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} GIVE CHANGE: ${balance}     $0.00");
+                        sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt")} GIVE CHANGE: ${balance}     $0.00");
 
                     };
 
@@ -143,12 +138,12 @@ namespace Capstone
                         }
                     }
                     
-                    Console.Write($"> Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).");
+                    Console.Write($"Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).");
                     
                 }
                 else
                 {
-                    Console.WriteLine("> Invalid Entry. Please enter valid input.");
+                    Console.WriteLine("Invalid Entry. Please enter valid input.");
                 }
             }
         }    
