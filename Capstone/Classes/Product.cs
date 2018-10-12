@@ -18,7 +18,7 @@ namespace Capstone.Classes
             this.Location = location;
             this.Price = price;
             this.Type = type;
-            this.Quantity = 5;
+            this.Quantity = 1;
         }       
     }
 }

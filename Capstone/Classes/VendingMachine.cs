@@ -7,12 +7,12 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
-        
+
         public Dictionary<string, Product> inventory = new Dictionary<string, Product>();
 
         public VendingMachine()
         {
-            List<Product> products = new List<Product>();            
+            List<Product> products = new List<Product>();
 
             using (StreamReader sr = new StreamReader("input.txt"))
             {
@@ -21,7 +21,6 @@ namespace Capstone.Classes
                     string line = sr.ReadLine();
                     string[] separated = line.Split("|");
 
-
                     Product product = new Product(separated[0], separated[1], decimal.Parse(separated[2]), separated[3]);
                     products.Add(product);
                 }
@@ -29,13 +28,13 @@ namespace Capstone.Classes
 
             foreach (Product item in products)
             {
-                inventory.Add(item.Location, item);
+                this.inventory.Add(item.Location, item);
             }
         }
 
         public void DisplayItems()
         {
-            foreach (KeyValuePair<string, Product> kvp in inventory)
+            foreach (KeyValuePair<string, Product> kvp in this.inventory)
             {
                 if (kvp.Value.Quantity > 0)
                 {
@@ -49,10 +48,10 @@ namespace Capstone.Classes
         }
 
         public void DispenseProduct(string input)
-        {            
-            if (inventory.ContainsKey(input))
+        {
+            if (this.inventory.ContainsKey(input))
             {
-                Product product = inventory[input];
+                Product product = this.inventory[input];
 
                 if (product.Quantity > 0)
                 {
@@ -75,15 +74,13 @@ namespace Capstone.Classes
                         case "Gum":
                             Console.WriteLine("\n>>CHEW CHEW, YUM!<<\n");
                             break;
-                    }                    
+                    }
                 }
-
                 else
                 {
                     Console.WriteLine("> Sorry! That item is out of stock.");
                 }
             }
-
             else
             {
                 Console.WriteLine("> Invalid Entry");

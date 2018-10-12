@@ -9,15 +9,13 @@ namespace Capstone
     {
         static void Main(string[] args)
         {
-            bool stop = true;
+
             decimal balance = 0;
             VendingMachine vendingMachine = new VendingMachine();
-            
 
-            while (stop)            
+            while (true)
             {
-                Console.WriteLine("Welcome to the VendoMatic 4000: Select Option Below");
-                
+                Console.WriteLine("\nWelcome to the VendoMatic 4000: Select Option Below");
 
                 Console.Write("(1) View Inventory \n(2) Select Product \n(3) Quit\n");
                 Console.Write($"> Current Balance: ${balance} \n>>:");
@@ -45,16 +43,14 @@ namespace Capstone
 
                             if (product.Quantity > 0)
                             {
-                                Console.Write($"> Price of item selected : ${product.Price} \n\n > {product.Quantity} Remaining\n");
-
+                                Console.Write($"\n> Price of item selected : ${product.Price} \n\n > {product.Quantity} Remaining\n");
 
                                 bool run = true;
 
                                 while (run)
                                 {
-                                    Console.WriteLine($"\n> Current Balance is ${balance}\n\n> Please Enter a Whole Dollar Amount(1, 2, 5, 10) or (E)nd to dispense");
+                                    Console.WriteLine($"\n> Current Balance is ${balance}\n\n> Please Enter a Whole Dollar Amount(1, 2, 5, 10), (d) to dispence or (s) to start over");
                                     string input2 = Console.ReadLine();
-
 
                                     if (input2 == "1" || input2 == "2" || input2 == "5" || input2 == "10")
                                     {
@@ -68,7 +64,7 @@ namespace Capstone
                                         }
 
                                     }
-                                    else if (input2 == "E" || input2 == "e")
+                                    else if (input2 == "D" || input2 == "d")
                                     {
                                         if (balance >= product.Price)
                                         {
@@ -77,7 +73,6 @@ namespace Capstone
                                             using (StreamWriter sw = new StreamWriter("log.txt", true))
                                             {
                                                 sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} {product.Name} {product.Location} ${balance}     ${balance - product.Price}");
-
                                             };
                                             balance -= product.Price;
                                         }
@@ -85,7 +80,11 @@ namespace Capstone
                                         {
                                             Console.WriteLine("> Insufficient Funds, please add more money.");
                                         }
-
+                                    }
+                                    else if (input2 == "S" || input2 == "s")
+                                    {
+                                        Console.WriteLine("");
+                                        break;
                                     }
                                     else
                                     {
@@ -98,16 +97,13 @@ namespace Capstone
                                 Console.WriteLine("\n>>Sorry that item is SOLD OUT<<\n");
                             }
                         }
-
                         else
                         {
                             Console.WriteLine("> Invalid Entry. Please enter valid input.");
                             valid = true;
                         }
-
                     } while (valid);
                 }
-
                 else if (menu == "3")
                 {
                     Console.WriteLine("> Thank You for using VendoMatic 4000!");
@@ -116,10 +112,7 @@ namespace Capstone
                     using (StreamWriter sw = new StreamWriter("log.txt", true))
                     {
                         sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} GIVE CHANGE: ${balance}     $0.00");
-
                     };
-
-                    stop = false;
                     int numQuarter = 0;
                     int numDime = 0;
                     int numNickel = 0;
@@ -142,15 +135,14 @@ namespace Capstone
                             balance -= 0.05M;
                         }
                     }
-                    
-                    Console.Write($"> Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).");
-                    
+
+                    Console.Write($"> Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).\n");
                 }
                 else
                 {
                     Console.WriteLine("> Invalid Entry. Please enter valid input.");
                 }
             }
-        }    
+        }
     }
 }
