@@ -10,16 +10,15 @@ namespace Capstone.Classes
         public string Location { get; }
         public decimal Price { get; }
         public string Type { get; }
+        public int Quantity { get; set; }
 
-        public Product(string name, string location, decimal price, string type)
+        public Product(string location, string name, decimal price, string type)
         {
             this.Name = name;
             this.Location = location;
             this.Price = price;
             this.Type = type;
-        }
-
-
-        //Delete this
+            this.Quantity = 5;
+        }       
     }
 }

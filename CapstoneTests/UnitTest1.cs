@@ -1,3 +1,4 @@
+using Capstone.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CapstoneTests
@@ -8,6 +9,10 @@ namespace CapstoneTests
         [TestMethod]
         public void TestMethod1()
         {
+            VendingMachine vend = new VendingMachine();
+
+            vend.DisplayItems();
+
         }
     }
 }
