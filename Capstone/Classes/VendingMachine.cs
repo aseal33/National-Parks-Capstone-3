@@ -7,6 +7,7 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
+        
         public Dictionary<string, Product> inventory = new Dictionary<string, Product>();
 
         public VendingMachine()
@@ -60,19 +61,19 @@ namespace Capstone.Classes
                     switch (product.Type)
                     {
                         case "Chip":
-                            Console.WriteLine("\n>>CRUNCH CRUNCH, YUM!<<");
+                            Console.WriteLine("\n>>CRUNCH CRUNCH, YUM!<<\n");
                             break;
 
                         case "Candy":
-                            Console.WriteLine("\n>>MUNCH MUNCH, YUM!<<");
+                            Console.WriteLine("\n>>MUNCH MUNCH, YUM!<<\n");
                             break;
 
                         case "Drink":
-                            Console.WriteLine("\n>>GLUG GLUG, YUM!<<");
+                            Console.WriteLine("\n>>GLUG GLUG, YUM!<<\n");
                             break;
 
                         case "Gum":
-                            Console.WriteLine("\n>>CHEW CHEW, YUM!<<");
+                            Console.WriteLine("\n>>CHEW CHEW, YUM!<<\n");
                             break;
                     }                    
                 }

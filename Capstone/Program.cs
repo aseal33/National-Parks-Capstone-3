@@ -68,7 +68,7 @@ namespace Capstone
                                         }
 
                                     }
-                                    else if (input2 == "E")
+                                    else if (input2 == "E" || input2 == "e")
                                     {
                                         if (balance >= product.Price)
                                         {
@@ -95,7 +95,7 @@ namespace Capstone
                             }
                             else
                             {
-                                Console.WriteLine("Sorry that item is SOLD OUT");
+                                Console.WriteLine("\n>>Sorry that item is SOLD OUT<<\n");
                             }
                         }
 
