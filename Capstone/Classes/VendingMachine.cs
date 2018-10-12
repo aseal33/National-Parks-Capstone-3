@@ -7,7 +7,7 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
-        Dictionary<string, Product> inventory = new Dictionary<string, Product>();
+        public Dictionary<string, Product> inventory = new Dictionary<string, Product>();
 
         public VendingMachine()
         {
@@ -36,39 +36,45 @@ namespace Capstone.Classes
         {
             foreach (KeyValuePair<string, Product> kvp in inventory)
             {
-                Console.WriteLine($"{kvp.Value.Location}|{kvp.Value.Name}|{kvp.Value.Price}|{kvp.Value.Quantity} in stock");
+                if(kvp.Value.Quantity > 0)
+                {
+                   Console.WriteLine($"{kvp.Value.Location} | {kvp.Value.Name} | {kvp.Value.Price} | {kvp.Value.Quantity} in stock"); 
+                }
+                else
+                {
+                    Console.Write($"{kvp.Value.Location} | {kvp.Value.Name} | {kvp.Value.Price} SOLD OUT");
+                    
+                }
+                
             }
         }
 
-        public void DispenseProduct()
-        {
-            Console.Write("> Please enter the location of the product you'd like to puchase: ");
-            string input = Console.ReadLine();
-
+        public void DispenseProduct(string input)
+        {         
             if (inventory.ContainsKey(input))
             {
                 Product product = inventory[input];
 
                 if (product.Quantity > 0)
                 {
-                    product.Quantity--;
+                    product.Quantity-= 1;
 
                     switch (product.Type)
                     {
-                        case "Chips":
-                            Console.WriteLine("Crunch Crunch, Yum!");
+                        case "Chip":
+                            Console.WriteLine("Crunch Crunch, Yum! \n");
                             break;
 
                         case "Candy":
-                            Console.WriteLine("Munch Munch, Yum!");
+                            Console.WriteLine("Munch Munch, Yum! \n");
                             break;
 
                         case "Drink":
-                            Console.WriteLine("Glug Glug, Yum!");
+                            Console.WriteLine("Glug Glug, Yum! \n");
                             break;
 
                         case "Gum":
-                            Console.WriteLine("Chew Chew, Yum!");
+                            Console.WriteLine("Chew Chew, Yum! \n");
                             break;
                     }
 

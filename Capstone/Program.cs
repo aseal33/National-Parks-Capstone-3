@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capstone.Classes;
+using System;
 using System.Collections.Generic;
 
 namespace Capstone
@@ -7,25 +8,98 @@ namespace Capstone
     {
         static void Main(string[] args)
         {
+            bool stop = true;
             decimal balance = 0;
-            bool run = true;
+            VendingMachine vendingMachine = new VendingMachine();
 
-            while (run)
+            while (stop)
+            
             {
-                Console.WriteLine("> Please Enter a Whole Dollar Amount(1, 2, 5, 10) or (q)uit: ");
-                string input = Console.ReadLine();
+                Console.WriteLine("Welcome to the VendoMatic 4000: Select Option Below");
+                
 
+                Console.Write("(1) View Inventory \n(2) Select Product \n(3) Quit\n >>:");
+                Console.WriteLine($"Current Balance: ${balance}");
+                string menu = Console.ReadLine();
 
-                if (input == "1" || input == "2" || input == "5" || input == "10")
+                
+
+                if (menu == "1")
                 {
-                    int amount = int.Parse(input);
-                    balance += (decimal)amount;
-
-                    Console.WriteLine($"${input} inserted. Current Balance is ${balance}");
+                    vendingMachine.DisplayItems();
+                    Console.WriteLine("");
                 }
-                else if (input == "q")
+                else if (menu == "2")
                 {
-                    decimal totalBalance = balance;
+                    bool valid = false;
+                    do
+                    {
+
+                        Console.Write("> Please enter the location of the product you'd like to puchase: ");
+                        string input = Console.ReadLine();
+
+
+                        if (vendingMachine.inventory.ContainsKey(input))
+                        {
+                            Product product = vendingMachine.inventory[input];
+
+                            if (product.Quantity > 0)
+                            {
+                                Console.Write($"Price of item selected : ${product.Price} \n {product.Quantity} Remaining");
+
+
+                                bool run = true;
+
+                                while (run)
+                                {
+                                    Console.WriteLine($"\n >Current Balance is ${balance}\n> Please Enter a Whole Dollar Amount(1, 2, 5, 10) or (E)nd to dispense");
+                                    string input2 = Console.ReadLine();
+
+
+                                    if (input2 == "1" || input2 == "2" || input2 == "5" || input2 == "10")
+                                    {
+                                        int amount = int.Parse(input2);
+                                        balance += (decimal)amount;
+
+                                        Console.WriteLine($"${input2} inserted.");
+
+                                    }
+                                    else if (input2 == "E")
+                                    {
+                                        if (balance >= product.Price)
+                                        {
+                                            run = false;
+                                            vendingMachine.DispenseProduct(input);
+                                            balance -= product.Price;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Insufficient Funds, please add more money.");
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Invalid Entry. Please enter valid input.");
+                                    }
+                                }
+
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Entry. Please enter valid input.");
+                            valid = true;
+                        }
+
+                    } while (valid);
+                }
+                else if (menu == "3")
+                {
+                    Console.WriteLine("Thank You for using VendoMatic 4000!");
+                    Console.WriteLine($"Your remaining balance is: ${balance}");
+                    stop = false;
                     int numQuarter = 0;
                     int numDime = 0;
                     int numNickel = 0;
@@ -48,12 +122,14 @@ namespace Capstone
                             balance -= 0.05M;
                         }
                     }
-
+                    
                     Console.Write($"Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).");
-
-                    run = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Entry. Please enter valid input.");
                 }
             }
-        }
+        }    
     }
 }
