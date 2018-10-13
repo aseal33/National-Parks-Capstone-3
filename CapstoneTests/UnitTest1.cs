@@ -25,8 +25,23 @@ namespace CapstoneTests
 
             vend.DispenseProduct("C4");
 
-            Assert.AreEqual(4, vend.inventory["C4"].Quantity);            
+            Assert.AreEqual(4, vend.inventory["C4"].Quantity);
 
+        }
+
+        // New Unit Test to Test the Sold Value, Can't Figure Out How to Get it Higher Than 1
+        [DataTestMethod]
+        [DataRow("C4", 1)]
+        [DataRow("D2", 1)]
+        [DataRow("B4", 1)]
+        [DataRow("A1", 1)]
+        public void SalesReportPopulatesCorrectlyWith0Quantity(string input, int expected)
+        {
+            VendingMachine vending = new VendingMachine();
+
+            vending.DispenseProduct(input);
+
+            Assert.AreEqual(expected, vending.inventory[input].Sold);
         }
 
     }

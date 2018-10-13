@@ -9,23 +9,25 @@ namespace Capstone
     {
         static void Main(string[] args)
         {
+            // Will Track Total Profit of Vending Machine for Sales Report
+            decimal totalProfit = 0;
 
             decimal balance = 0;
+
             VendingMachine vendingMachine = new VendingMachine();
 
             while (true)
             {
-                Console.WriteLine("\nWelcome to the VendoMatic 4000: Select Option Below");
-
-                Console.Write("(1) View Inventory \n(2) Select Product \n(3) Quit\n");
-                Console.Write($"> Current Balance: ${balance} \n>>:");
+                // I made a couple minor changes to spacing in a couple places too, nothing major except at the bottom
+                Console.WriteLine("\n**Welcome to the VendoMatic 4000**\n\nSelect Option Below\n-------------------");
+                Console.WriteLine("(1) View Inventory \n(2) Select Product \n(3) Quit\n");
+                Console.Write($"> Current Balance: ${balance} \n\n>>:");
                 string menu = Console.ReadLine();
                 Console.WriteLine("");
 
                 if (menu == "1")
                 {
                     vendingMachine.DisplayItems();
-                    Console.WriteLine("");
                 }
                 else if (menu == "2")
                 {
@@ -33,9 +35,11 @@ namespace Capstone
 
                     do
                     {
-                        Console.Write("> Please enter the location of the product you'd like to puchase: ");
+                        Console.Write(">> Please enter the location of the product you'd like to puchase: ");
+
                         string input = Console.ReadLine().ToUpper();
 
+                        valid = false;
 
                         if (vendingMachine.inventory.ContainsKey(input))
                         {
@@ -43,13 +47,13 @@ namespace Capstone
 
                             if (product.Quantity > 0)
                             {
-                                Console.Write($"\n> Price of item selected : ${product.Price} \n\n > {product.Quantity} Remaining\n");
+                                Console.Write($"\n> Price of item selected : ${product.Price} \n\n> {product.Quantity} Remaining\n");
 
                                 bool run = true;
 
                                 while (run)
                                 {
-                                    Console.WriteLine($"\n> Current Balance is ${balance}\n\n> Please Enter a Whole Dollar Amount(1, 2, 5, 10), (d) to dispence or (s) to start over");
+                                    Console.Write($"\n> Current Balance is ${balance}\n\n>> Please Enter a Whole Dollar Amount(1, 2, 5, 10), (d) to dispence or (s) to start over\n\n>>: ");
                                     string input2 = Console.ReadLine();
 
                                     if (input2 == "1" || input2 == "2" || input2 == "5" || input2 == "10")
@@ -58,11 +62,11 @@ namespace Capstone
                                         balance += (decimal)amount;
 
                                         Console.WriteLine($"> ${input2} inserted.");
+
                                         using (StreamWriter sw = new StreamWriter("log.txt", true))
                                         {
                                             sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} FEED MONEY: ${amount}     ${balance}");
                                         }
-
                                     }
                                     else if (input2 == "D" || input2 == "d")
                                     {
@@ -75,6 +79,9 @@ namespace Capstone
                                                 sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} {product.Name} {product.Location} ${balance}     ${balance - product.Price}");
                                             };
                                             balance -= product.Price;
+
+                                            // Adds to the Total Sales Number for Sales Report
+                                            totalProfit += product.Price;
                                         }
                                         else
                                         {
@@ -99,7 +106,7 @@ namespace Capstone
                         }
                         else
                         {
-                            Console.WriteLine("> Invalid Entry. Please enter valid input.");
+                            Console.WriteLine("\n> Invalid Entry. Please enter valid input.\n");
                             valid = true;
                         }
                     } while (valid);
@@ -136,11 +143,26 @@ namespace Capstone
                         }
                     }
 
-                    Console.Write($"> Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).\n");
+                    Console.WriteLine($"> Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).\n");
+
+                    // I added this for style to help separate things after the loop and signify new user
+                    Console.WriteLine("\n------------------------------------------------------------------------------\n");
+                }
+
+                // SALES REPORT OPTION  
+                else if (menu == "4")
+                {
+                    // Loops through our inventory and prints the amount sold of each product and total sales since instantiation
+                    foreach (KeyValuePair<string, Product> kvp in vendingMachine.inventory)
+                    {
+                        Console.WriteLine($"{kvp.Value.Name} | {kvp.Value.Sold}");
+                    }
+
+                    Console.WriteLine($"\n\n**TOTAL SALES** ${totalProfit}\n");
                 }
                 else
                 {
-                    Console.WriteLine("> Invalid Entry. Please enter valid input.");
+                    Console.WriteLine("\n> Invalid Entry. Please enter valid input.\n");
                 }
             }
         }

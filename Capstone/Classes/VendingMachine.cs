@@ -7,7 +7,6 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
-
         public Dictionary<string, Product> inventory = new Dictionary<string, Product>();
 
         public VendingMachine()
@@ -42,7 +41,7 @@ namespace Capstone.Classes
                 }
                 else
                 {
-                    Console.WriteLine($"> {kvp.Value.Location} | {kvp.Value.Name} | ${kvp.Value.Price} | SOLD OUT"); 
+                    Console.WriteLine($"> {kvp.Value.Location} | {kvp.Value.Name} | ${kvp.Value.Price} | SOLD OUT");
                 }
             }
         }
@@ -56,6 +55,9 @@ namespace Capstone.Classes
                 if (product.Quantity > 0)
                 {
                     product.Quantity--;
+
+                    // Increments the Sold Value to track sales through each instance of the VendMachine
+                    product.Sold++;
 
                     switch (product.Type)
                     {
