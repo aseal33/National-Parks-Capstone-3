@@ -29,7 +29,6 @@ namespace CapstoneTests
 
         }
 
-        // New Unit Test to Test the Sold Value, Can't Figure Out How to Get it Higher Than 1
         [DataTestMethod]
         [DataRow("C4", 1)]
         [DataRow("D2", 1)]

@@ -18,8 +18,7 @@ namespace Capstone
 
             while (true)
             {
-                // I made a couple minor changes to spacing in a couple places too, nothing major except at the bottom
-                Console.WriteLine("\n**Welcome to the VendoMatic 4000**\n\nSelect Option Below\n-------------------");
+                Console.WriteLine("\n**Welcome to the Vend-O-Matic 4000**\n\nSelect Option Below\n-------------------");
                 Console.WriteLine("(1) View Inventory \n(2) Select Product \n(3) Quit\n");
                 Console.Write($"> Current Balance: ${balance} \n\n>>:");
                 string menu = Console.ReadLine();
@@ -79,8 +78,6 @@ namespace Capstone
                                                 sw.WriteLine($"{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")} {product.Name} {product.Location} ${balance}     ${balance - product.Price}");
                                             };
                                             balance -= product.Price;
-
-                                            // Adds to the Total Sales Number for Sales Report
                                             totalProfit += product.Price;
                                         }
                                         else
@@ -113,7 +110,7 @@ namespace Capstone
                 }
                 else if (menu == "3")
                 {
-                    Console.WriteLine("> Thank You for using VendoMatic 4000!");
+                    Console.WriteLine("> Thank You for using Vend-O-Matic 4000!");
                     Console.WriteLine($"> Your remaining balance is: ${balance}");
 
                     using (StreamWriter sw = new StreamWriter("log.txt", true))
@@ -144,15 +141,10 @@ namespace Capstone
                     }
 
                     Console.WriteLine($"> Here is your change: {numQuarter} Quarter(s), {numDime} Dime(s), {numNickel} Nickel(s).\n");
-
-                    // I added this for style to help separate things after the loop and signify new user
                     Console.WriteLine("\n------------------------------------------------------------------------------\n");
                 }
-
-                // SALES REPORT OPTION  
                 else if (menu == "4")
                 {
-                    // Loops through our inventory and prints the amount sold of each product and total sales since instantiation
                     foreach (KeyValuePair<string, Product> kvp in vendingMachine.inventory)
                     {
                         Console.WriteLine($"{kvp.Value.Name} | {kvp.Value.Sold}");

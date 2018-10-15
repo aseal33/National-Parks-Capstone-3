@@ -55,8 +55,6 @@ namespace Capstone.Classes
                 if (product.Quantity > 0)
                 {
                     product.Quantity--;
-
-                    // Increments the Sold Value to track sales through each instance of the VendMachine
                     product.Sold++;
 
                     switch (product.Type)
